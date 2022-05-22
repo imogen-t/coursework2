@@ -52,7 +52,8 @@ def optimise(x, y,parameters,learning_rate=0.02,iterations=500):
 
 init_parameters = {}
 init_parameters["weight"] = np.zeros(X_train.shape[1])
-init_parameters["bias"] = random.uniform(-0.1,0.1)
+init_parameters["bias"] = 0
+# init_parameters["bias"] = random.uniform(-0.1,0.1)
 
 
 # %% 
@@ -61,10 +62,12 @@ init_parameters["bias"] = random.uniform(-0.1,0.1)
 
 training = optimise(X_train, y_train[24], parameters=init_parameters)
 
-y_train_hat = np.dot(X_test,training["weight"]+training["bias"])
 
-predictions = sigmoid(y_train_hat)
+X_testdf = pd.DataFrame(X_test)
+predictions = pd.DataFrame(sigmoid(np.dot(X_test,training["weight"]+training["bias"])))
 
+X_testdf['prediction'] = predictions
 
+abnormals = X_testdf.loc[X_testdf['prediction']]
 
 # %%

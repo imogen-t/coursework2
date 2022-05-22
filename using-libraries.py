@@ -86,9 +86,5 @@ X_test.insert(24, 'prediction', predictions)
 # %%
 # Extract test points model labels as abnormal
 
-abnormal_test = []
-
-for index,row in X_test.iterrows():
-    if(row.prediction == 1.0):
-        abnormal_test.append(row)
+abnormals = X_test.loc[X_test['prediction']==1]
 # %%
