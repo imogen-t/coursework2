@@ -1,7 +1,4 @@
 # %%
-# https://www.learndatasci.com/glossary/binary-classification/
-# https://stackabuse.com/classification-in-python-with-scikit-learn-and-pandas/
-
 # imports
 
 # graph plotting
@@ -16,7 +13,6 @@ import numpy as np
 # data analysis
 import sklearn as sk
 from sklearn.linear_model import LogisticRegression
-from sklearn import svm
 #%%
 # read in training data
 
