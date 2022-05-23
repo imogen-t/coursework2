@@ -11,6 +11,7 @@ from matplotlib import cm
 # read data into frames
 import pandas as pd
 
+import numpy as np
 
 # data analysis
 import sklearn as sk
@@ -47,6 +48,8 @@ https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticR
 model = LogisticRegression();
 model.fit(X_train, y_train)
 
+coeffifients = model.coef_
+
 # %%
 # Read in test data
 
@@ -58,22 +61,7 @@ X_test = pd.read_csv("TestingData.txt", sep=",",header=None)
 
 predictions = model.predict(X_test)
 
-# %%
-# Test accuracy of model 
-# Cannot do this without labels for test data
-
-print("Accuracy Test")
-"""
-Ideal accuracy test
-
-Calculate number of:
-* True positives
-* False positives
-* True negatives
-* False negatives
-
-accuracy = (TP+TN)/(TP+FP+TN+FN)
-"""
+abnormal_count = np.count_nonzero(predictions == 1)
 
 # %%
 
@@ -87,4 +75,8 @@ X_test.insert(24, 'prediction', predictions)
 # Extract test points model labels as abnormal
 
 abnormals = X_test.loc[X_test['prediction']==1]
+# %%
+# write to csv
+
+abnormals.to_csv('library-abnormals.csv', header=None)
 # %%

@@ -12,20 +12,17 @@ df = pd.read_csv('TrainingData.txt', header=None)
 X_train = df.iloc[:,:24]
 y_train = df.iloc[:,24:]
 
-# TODO: Plot graphs of data
 
-X_train = preprocessing.scale(X_train.x, X_train.y)
 
 X_test = pd.read_csv('TestingData.txt', header=None)
 
-X_test = preprocessing.scale(X_test)
 
 
 # %%
 # Sigmoid
 def sigmoid(z):
     out = 1/(1+np.exp(-z))
-    return out >= 1/2
+    return out 
 
 # %%
 # Learning
@@ -64,8 +61,12 @@ training = optimise(X_train, y_train[24], parameters=init_parameters)
 
 
 X_testdf = pd.DataFrame(X_test)
-out = np.dot(X_test,training["weight"]+training["bias"])
-predictions = pd.DataFrame(sigmoid(out))
+out = np.dot(X_test,training["weight"]) #+training["bias"]
+
+w = training["weight"]
+
+sig = sigmoid(out) >= 1/2
+predictions = pd.DataFrame(sig) 
 
 X_testdf['prediction'] = predictions
 
