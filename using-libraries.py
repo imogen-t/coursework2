@@ -45,10 +45,10 @@ https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticR
 * max of 100 iterations
 """
 
-model = LogisticRegression();
+model = LogisticRegression(max_iter=1000);
 model.fit(X_train, y_train)
 
-coeffifients = model.coef_
+pd.DataFrame(model.coef_).to_csv('library-parameters.csv', header=None)
 
 # %%
 # Read in test data

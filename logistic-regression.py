@@ -9,14 +9,17 @@ from sklearn import preprocessing
 
 df = pd.read_csv('TrainingData.txt', header=None)
 
+
+
+
 X_train = df.iloc[:,:24]
 y_train = df.iloc[:,24:]
 
-
+X_train = preprocessing.scale(X_train)
 
 X_test = pd.read_csv('TestingData.txt', header=None)
 
-
+X_test = preprocessing.scale(X_test)
 
 # %%
 # Sigmoid
@@ -61,17 +64,18 @@ training = optimise(X_train, y_train[24], parameters=init_parameters)
 
 
 X_testdf = pd.DataFrame(X_test)
-out = np.dot(X_test,training["weight"]) #+training["bias"]
+out = np.dot(X_test,training["weight"]+training["bias"])
+sig = sigmoid(out) >= 1/2 # false === 0; true === 1
 
-w = training["weight"]
 
-sig = sigmoid(out) >= 1/2
 predictions = pd.DataFrame(sig) 
 
 X_testdf['prediction'] = predictions
 
 abnormals = X_testdf.loc[X_testdf['prediction']]
 
+abnormals.to_csv('nonlibrary-abnormals.csv', header=None)
 
-
+params = pd.DataFrame.from_dict(init_parameters)
+params.to_csv('nonlibrary-parameters.csv')
 # %%
