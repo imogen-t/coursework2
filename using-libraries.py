@@ -75,4 +75,6 @@ abnormals = X_test.loc[X_test['prediction']==1]
 # write to csv
 
 abnormals.to_csv('library-abnormals.csv', header=None)
+
+X_test.to_csv('TestingResults.csv', header=None)
 # %%
