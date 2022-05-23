@@ -100,34 +100,47 @@ optimisedA = allOptimised[::3]
 optimisedB = allOptimised[1::3]
 optimisedC = allOptimised[2::3]
 # %%
-# get frequency counts for each time
-concated = []
-for elem in optimisedA:
-    for e in elem:
-        concated += e
 
-counts = list({(x,concated.count(x)) for x in concated})
+def prepDataForGraphs(optimisedPricing):
+    # get frequency counts for each time
+    concated = []
+    for elem in optimisedPricing:
+        for e in elem:
+            concated += e
 
-# fill in emptys
-for i in range(24):
-    if([item for item in counts if item[0] == i] == []):
-        counts.append((i,0))
+    counts = list({(x,concated.count(x)) for x in concated})
 
-counts = sorted(counts, key= lambda x : x[0])
+    # fill in times with no consumption
+    for i in range(24):
+        if([item for item in counts if item[0] == i] == []):
+            counts.append((i,0))
+
+    counts = sorted(counts, key= lambda x : x[0])
+
+    return counts
+
+
 
 # %%
 # plot bar chart for each time
 
-fig = plt.figure()
-ax = fig.add_axes([0,0,1,1])
-times = list(zip(*counts))[0]
-frequencies = list(zip(*counts))[1]
-ax.bar(times, frequencies)
-plt.title("Optimal Cumulative Energy Use by 5 Users with IoT Devices by Hour")
-plt.xlabel("Time, in 24-hour format")
-plt.ylabel("Number of IoT devices used in this hour")
-plt.xticks(range(24))
-plt.show()
+def plotData(optimisedData):
+    counts = prepDataForGraphs(optimisedData)
+    fig = plt.figure()
+    ax = fig.add_axes([0,0,1,1])
+    times = list(zip(*counts))[0]
+    frequencies = list(zip(*counts))[1]
+    ax.bar(times, frequencies)
+    plt.title("Optimal Cumulative Energy Use by 5 Users with IoT Devices by Hour")
+    plt.xlabel("Time, in 24-hour format")
+    plt.ylabel("Number of IoT devices used in this hour")
+    plt.xticks(range(24))
+    plt.show()
 
 
+# %%
+
+plotData(optimisedA)
+plotData(optimisedB)
+plotData(optimisedC)
 # %%
